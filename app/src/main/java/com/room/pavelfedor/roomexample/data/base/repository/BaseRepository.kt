@@ -7,16 +7,16 @@ interface BaseRepository<Data, Executor> {
 
     val executor: Executor
 
-    fun <Q : Query<*, *>> get(query: Q): Data
+    fun <Q : Query<Executor, Data, *, *>> get(query: Q): Data
 
-    fun <Q : Query<*, *>> update(data: Data, query: Q)
+    fun <Q : Query<Executor, Data, *, *>> update(data: Data, query: Q)
 
-    fun <Q : Query<*, *>> remove(data: Data, query: Q)
+    fun <Q : Query<Executor, Data, *, *>> remove(data: Data, query: Q)
 
-    fun <Q : Query<*, *>> save(data: Data, query: Q)
+    fun <Q : Query<Executor, Data, *, *>> save(data: Data, query: Q)
 }
 
-abstract class Query<Key, Value>(val params: Map<Key, Value>) {
+abstract class Query<Executor, Data, Key, Value>(val params: Map<Key, Value>) {
 
     private fun get(key: Key) = params[key] ?: throw IllegalArgumentException("No such key")
 
@@ -26,5 +26,5 @@ abstract class Query<Key, Value>(val params: Map<Key, Value>) {
 
     private fun toJson() = Gson().toJson(params)
 
-    abstract fun <Executor, Data> invoke(executor: Executor): Data
+    abstract fun invoke(executor: Executor): Data
 }
