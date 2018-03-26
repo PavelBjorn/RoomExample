@@ -11,7 +11,6 @@ data class CategoryEntity(
         @ColumnInfo(name = FULL_TITLE_COLUMN) val fullTitle: String = ""
 ) {
     companion object {
-        //test
         const val TABLE = "category"
         const val ID_COLUMN = "_id"
         const val TITLE_COLUMN = "title"

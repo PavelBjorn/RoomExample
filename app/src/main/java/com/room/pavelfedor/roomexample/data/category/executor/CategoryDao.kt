@@ -1,4 +1,4 @@
-package com.room.pavelfedor.roomexample.data.category.executor.local
+package com.room.pavelfedor.roomexample.data.category.executor
 
 import android.arch.persistence.room.*
 import com.room.pavelfedor.roomexample.data.category.entity.local.CategoryEntity

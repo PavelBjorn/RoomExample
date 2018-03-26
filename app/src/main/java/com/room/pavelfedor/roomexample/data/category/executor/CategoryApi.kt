@@ -1,6 +1,4 @@
-package com.room.pavelfedor.roomexample.data.category.executor.remote
-
-import com.room.pavelfedor.roomexample.data.base.repository.Query as RepositoryQuery
+package com.room.pavelfedor.roomexample.data.category.executor
 import com.room.pavelfedor.roomexample.data.category.entity.remoute.Category
 import io.reactivex.Single
 import retrofit2.http.GET

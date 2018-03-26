@@ -1,20 +1,20 @@
 package com.room.pavelfedor.roomexample.data.category.dao
 
 import android.arch.persistence.room.*
-import com.room.pavelfedor.roomexample.data.category.entity.CategoryLocalEntity
+import com.room.pavelfedor.roomexample.data.category.entity.local.CategoryEntity
 
 @Dao
 interface CategoryDao {
 
-    @Query("SELECT * FROM ${CategoryLocalEntity.TABLE}")
-    fun get(): List<CategoryLocalEntity>
+    @Query("SELECT * FROM ${CategoryEntity.TABLE}")
+    fun get(): List<CategoryEntity>
 
     @Insert
-    fun insert(categories: List<CategoryLocalEntity>)
+    fun insert(categories: List<CategoryEntity>)
 
     @Delete
-    fun delete(categories: List<CategoryLocalEntity>)
+    fun delete(categories: List<CategoryEntity>)
 
     @Update
-    fun update(categories: List<CategoryLocalEntity>)
+    fun update(categories: List<CategoryEntity>)
 }
