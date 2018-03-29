@@ -25,4 +25,6 @@ data class ProductEntity(
         const val DESCRIPTION_COLUMN = "description"
         const val IMAGES_COLUMN = "images"
     }
+
+    fun getFirtsImage() = images.firstOrNull()
 }
