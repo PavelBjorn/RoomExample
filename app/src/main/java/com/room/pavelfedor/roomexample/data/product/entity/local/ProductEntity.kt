@@ -7,12 +7,12 @@ import com.room.pavelfedor.roomexample.data.product.entity.local.ProductEntity.C
 
 @Entity(tableName = TABLE)
 data class ProductEntity(
-        @PrimaryKey @ColumnInfo(name = ID_COLUMN) val id: Long = 0,
-        @ColumnInfo(name = CATEGORY_ID_COLUMN) val categoryId: Long = 0,
-        @ColumnInfo(name = TITLE_COLUMN) val title: String = "",
-        @ColumnInfo(name = CURRENCY_COLUMN) val currencyCode: String = "",
-        @ColumnInfo(name = PRICE_COLUMN) val price: Double = 0.0,
-        @ColumnInfo(name = DESCRIPTION_COLUMN) val description: String = "",
+        @PrimaryKey @ColumnInfo(name = ID_COLUMN) val id: Long,
+        @ColumnInfo(name = CATEGORY_ID_COLUMN) val categoryId: Long,
+        @ColumnInfo(name = TITLE_COLUMN) val title: String?,
+        @ColumnInfo(name = CURRENCY_COLUMN) val currencyCode: String?,
+        @ColumnInfo(name = PRICE_COLUMN) val price: Double?,
+        @ColumnInfo(name = DESCRIPTION_COLUMN) val description: String?,
         @ColumnInfo(name = IMAGES_COLUMN) val images: List<ImageEntity> = listOf()
 ) {
     companion object {

@@ -1,25 +1,27 @@
 package com.room.pavelfedor.roomexample.data.base.interactor
 
 import com.room.pavelfedor.roomexample.data.base.repository.BaseRepository
+import com.room.pavelfedor.roomexample.data.base.repository.RepositoryContainer
 import io.reactivex.Single
+import java.lang.reflect.Type
 
 class RepositoryInteractor private constructor(
-        private val repositories: MutableMap<Class<*>, BaseRepository<*, *>>
+        private val repositories: MutableMap<Type, BaseRepository<RepositoryContainer<*>, *>>
 ) {
-    fun <Entity : Any> getFromRepository(entityClass: Class<Entity>, query: Map<String, String> = mapOf()) = createObservable {
-        (repositories[entityClass] as? BaseRepository<Entity, Any>)?.get(query)
+    fun <Entity : RepositoryContainer<*>> getFromRepository(entityClass: Class<Entity>, query: Map<String, String> = mapOf()) = createObservable {
+        repositories[entityClass]?.get(query) as Entity
     }
 
-    fun <Entity : Any> updateRepository(entity: Entity, query: Map<String, String> = mapOf()) = createObservable {
-        (repositories[entity::class.java] as?  BaseRepository<Entity, Any>)?.update(entity, query)
+    fun <Entity : RepositoryContainer<*>> updateRepository(entity: Entity, query: Map<String, String> = mapOf()) = createObservable {
+        repositories[entity::class.java]?.update(entity, query) as Entity
     }
 
-    fun <Entity : Any> removeFromRepository(entity: Entity, query: Map<String, String> = mapOf()) = createObservable {
-        (repositories[entity::class.java] as?  BaseRepository<Entity, Any>)?.remove(entity, query)
+    fun <Entity : RepositoryContainer<*>> removeFromRepository(entity: Entity, query: Map<String, String> = mapOf()) = createObservable {
+        repositories[entity::class.java]?.remove(entity, query) as Entity
     }
 
-    fun <Entity : Any> saveToRepository(entity: Entity, query: Map<String, String>) {
-        (repositories[entity::class.java] as?  BaseRepository<Entity, Any>)?.save(entity)
+    fun <Entity : RepositoryContainer<*>> saveToRepository(entity: Entity, query: Map<String, String> = mapOf()) = createObservable {
+        repositories[entity::class.java]?.save(entity) as Entity
     }
 
     private fun <Entity> createObservable(action: () -> Entity) = Single.create<Entity> {
@@ -33,10 +35,10 @@ class RepositoryInteractor private constructor(
 
     companion object {
 
-        infix fun with(repositories: List<BaseRepository<*, *>>): RepositoryInteractor {
+        infix fun with(repositories: List<BaseRepository<RepositoryContainer<*>, *>>): RepositoryInteractor {
             return RepositoryInteractor(
                     repositories.asSequence()
-                            .map { it.getDataClass() to it }
+                            .map { it.getContainerClass() to it }
                             .toMap()
                             .toMutableMap()
             )

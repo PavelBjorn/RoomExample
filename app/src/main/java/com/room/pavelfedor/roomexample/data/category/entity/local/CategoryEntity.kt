@@ -6,10 +6,12 @@ import android.arch.persistence.room.PrimaryKey
 
 @Entity(tableName = CategoryEntity.TABLE)
 data class CategoryEntity(
-        @PrimaryKey @ColumnInfo(name = ID_COLUMN) val id: String = "",
-        @ColumnInfo(name = TITLE_COLUMN) val title: String = "",
-        @ColumnInfo(name = FULL_TITLE_COLUMN) val fullTitle: String = ""
+        @PrimaryKey @ColumnInfo(name = ID_COLUMN) val id: String,
+        @ColumnInfo(name = TITLE_COLUMN) val title: String?,
+        @ColumnInfo(name = FULL_TITLE_COLUMN) val fullTitle: String?
 ) {
+    override fun toString() = title ?: ""
+
     companion object {
         const val TABLE = "category"
         const val ID_COLUMN = "_id"

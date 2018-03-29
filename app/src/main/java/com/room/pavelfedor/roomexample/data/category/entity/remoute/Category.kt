@@ -8,8 +8,8 @@ data class Category(
         @SerializedName(FULL_TITLE) val fullTitle: String = ""
 ) {
     companion object {
-        const val ID = "_id"
-        const val TITLE = "title"
-        const val FULL_TITLE = "full_title"
+        const val ID = "category_id"
+        const val TITLE = "short_name"
+        const val FULL_TITLE = "long_name"
     }
 }
