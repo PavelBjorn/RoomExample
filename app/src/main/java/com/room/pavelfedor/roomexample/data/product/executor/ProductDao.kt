@@ -6,15 +6,19 @@ import com.room.pavelfedor.roomexample.data.product.entity.local.ProductEntity
 @Dao
 interface ProductDao {
 
-    @Query("SELECT * FROM ${ProductEntity.TABLE} WHERE ${ProductEntity.CATEGORY_ID_COLUMN} = :catId")
-    fun get(catId: String): List<ProductEntity>
+    @Transaction
+    @Query("SELECT * FROM ${ProductEntity.TABLE} CASE :query")
+    fun get(query: String = ""): List<ProductEntity>
 
+    @Transaction
     @Insert
     fun insert(categories: List<ProductEntity>)
 
+    @Transaction
     @Delete
     fun delete(categories: List<ProductEntity>)
 
+    @Transaction
     @Update
     fun update(categories: List<ProductEntity>)
 }

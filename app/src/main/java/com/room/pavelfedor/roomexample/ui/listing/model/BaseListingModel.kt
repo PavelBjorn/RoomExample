@@ -9,9 +9,13 @@ import io.reactivex.schedulers.Schedulers
 
 abstract class BaseListingModel : BaseModel() {
 
-    abstract fun getProducts(): Single<List<ProductEntity>>
+    abstract fun getProducts(query: Map<String, String>): Single<List<ProductEntity>>
 
     open fun updateProducts(products: List<ProductEntity>) = repositoryInteractor.updateRepository(
             ProductEntityRepositoryContainer(products.toMutableList())
     ).map { it.data }.subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
+
+    fun switchFavoriteStatus(item: ProductEntity) {
+
+    }
 }

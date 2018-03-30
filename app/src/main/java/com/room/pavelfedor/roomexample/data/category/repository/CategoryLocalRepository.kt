@@ -11,7 +11,7 @@ class CategoryLocalRepository(override val executor: CategoryDao)
 
     override var cachedData: CategoryEntityRepositoryContainer = CategoryEntityRepositoryContainer(mutableListOf())
 
-    override fun get(query: Map<String, String>) = CategoryEntityRepositoryContainer(executor.get().toMutableList())
+    override fun get(query: Map<String, String>) = CategoryEntityRepositoryContainer(executor.get("WHERE ${CategoryEntity.TITLE_COLUMN} LIKE \"%a%\"").toMutableList())
 
     override fun update(dataContainer: CategoryEntityRepositoryContainer, query: Map<String, String>) = executor.update(dataContainer.data).let {
         cachedData.apply { this.data.replace(dataContainer.data) { old, new -> old.id == new.id } }

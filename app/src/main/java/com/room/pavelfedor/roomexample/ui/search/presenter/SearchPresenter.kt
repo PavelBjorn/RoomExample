@@ -30,6 +30,7 @@ class SearchPresenter : BasePresenter<SearchModel, SearchView> {
     }
 
     fun getCategories() {
+        view?.showProgress()
         model.getCategories().map { it.data }.subscribe(::onCategoriesSuccess, ::handleError)
     }
 }

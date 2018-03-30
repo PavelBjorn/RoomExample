@@ -11,10 +11,8 @@ class ProductLocalRepository(override val executor: ProductDao) : BaseCachedRepo
 
     override var cachedData: ProductEntityRepositoryContainer = ProductEntityRepositoryContainer(mutableListOf())
 
-    override fun get(query: Map<String, String>) = ProductEntityRepositoryContainer(executor.get(
-            query[ProductEntity.CATEGORY_ID_COLUMN]
-                    ?: throw IllegalArgumentException("Wrong category id")
-    ).toMutableList())
+    override fun get(query: Map<String, String>) = ProductEntityRepositoryContainer(executor.get(formQuery(query))
+            .toMutableList())
 
     override fun updateCache(dataContainer: ProductEntityRepositoryContainer) {
         cachedData.data.clear()
@@ -34,6 +32,10 @@ class ProductLocalRepository(override val executor: ProductDao) : BaseCachedRepo
     }
 
     override fun getContainerClass() = ProductEntityRepositoryContainer::class.java
+
+    private fun formQuery(params: Map<String, String>): String {
+        return ("REMOVE_" + params.map { "AND WHERE ${it.key} = ${it.value}" }.toList().joinToString { it }).replace("REMOVE_AND", "")
+    }
 }
 
 class ProductEntityRepositoryContainer(data: MutableList<ProductEntity>) : RepositoryContainer<MutableList<ProductEntity>>(data)
