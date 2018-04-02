@@ -13,13 +13,21 @@ data class ProductEntity(
         @ColumnInfo(name = CURRENCY_COLUMN) val currencyCode: String?,
         @ColumnInfo(name = PRICE_COLUMN) val price: Double?,
         @ColumnInfo(name = DESCRIPTION_COLUMN) val description: String?,
-        @ColumnInfo(name = IMAGES_COLUMN) val images: List<ImageEntity> = listOf(),
-        @ColumnInfo(name = FAVORITE_COLUMN) val favorite:Boolean
+        @ColumnInfo(name = IMAGES_COLUMN) val images: List<ImageEntity> = listOf()
 ) {
+
+    @ColumnInfo(name = FAVORITE_COLUMN)
+    var favorite: Int = 0
 
     fun getFirstImage() = images.firstOrNull()
 
     fun getFullPrice() = "$price $currencyCode"
+
+    fun isFavorite() = favorite == 1
+
+    fun isFavorite(favorite:Boolean) {
+      this.favorite = if (favorite) 1 else 0
+    }
 
     companion object {
         const val TABLE = "product"

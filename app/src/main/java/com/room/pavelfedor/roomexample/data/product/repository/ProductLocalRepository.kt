@@ -1,5 +1,6 @@
 package com.room.pavelfedor.roomexample.data.product.repository
 
+import android.arch.persistence.db.SimpleSQLiteQuery
 import com.room.pavelfedor.roomexample.data.base.repository.BaseCachedRepository
 import com.room.pavelfedor.roomexample.data.base.repository.RepositoryContainer
 import com.room.pavelfedor.roomexample.data.product.entity.local.ProductEntity
@@ -11,8 +12,12 @@ class ProductLocalRepository(override val executor: ProductDao) : BaseCachedRepo
 
     override var cachedData: ProductEntityRepositoryContainer = ProductEntityRepositoryContainer(mutableListOf())
 
-    override fun get(query: Map<String, String>) = ProductEntityRepositoryContainer(executor.get(formQuery(query))
-            .toMutableList())
+    override fun get(query: Map<String, String>) = ProductEntityRepositoryContainer(
+            executor.get(
+                    SimpleSQLiteQuery(
+                            "SELECT * FROM ${ProductEntity.TABLE} ${formQuery(query)}"
+                    )
+            ).toMutableList())
 
     override fun updateCache(dataContainer: ProductEntityRepositoryContainer) {
         cachedData.data.clear()

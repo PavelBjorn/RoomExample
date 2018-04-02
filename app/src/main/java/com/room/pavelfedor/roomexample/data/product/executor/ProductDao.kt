@@ -1,5 +1,7 @@
 package com.room.pavelfedor.roomexample.data.product.executor
 
+import android.arch.persistence.db.SimpleSQLiteQuery
+import android.arch.persistence.db.SupportSQLiteQuery
 import android.arch.persistence.room.*
 import com.room.pavelfedor.roomexample.data.product.entity.local.ProductEntity
 
@@ -7,8 +9,8 @@ import com.room.pavelfedor.roomexample.data.product.entity.local.ProductEntity
 interface ProductDao {
 
     @Transaction
-    @Query("SELECT * FROM ${ProductEntity.TABLE} CASE :query")
-    fun get(query: String = ""): List<ProductEntity>
+    @RawQuery
+    fun get(query:SupportSQLiteQuery = SimpleSQLiteQuery("SELECT * FROM ${ProductEntity.TABLE}")): List<ProductEntity>
 
     @Transaction
     @Insert

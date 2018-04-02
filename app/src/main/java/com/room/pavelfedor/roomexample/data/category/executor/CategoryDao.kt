@@ -1,5 +1,6 @@
 package com.room.pavelfedor.roomexample.data.category.executor
 
+import android.arch.persistence.db.SimpleSQLiteQuery
 import android.arch.persistence.room.*
 import com.room.pavelfedor.roomexample.data.category.entity.local.CategoryEntity
 
@@ -7,8 +8,8 @@ import com.room.pavelfedor.roomexample.data.category.entity.local.CategoryEntity
 interface CategoryDao {
 
     @Transaction
-    @Query("SELECT * FROM ${CategoryEntity.TABLE} CASE :query WHEN ")
-    fun get(query: String = ""): List<CategoryEntity>
+    @RawQuery
+    fun get(query: SimpleSQLiteQuery = SimpleSQLiteQuery("SELECT * FROM ${CategoryEntity.TABLE}")): List<CategoryEntity>
 
     @Transaction
     @Insert

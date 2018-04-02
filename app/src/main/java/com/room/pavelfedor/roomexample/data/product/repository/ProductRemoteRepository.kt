@@ -8,8 +8,10 @@ import com.room.pavelfedor.roomexample.data.product.executor.ProductApi
 
 class ProductRemoteRepository(override val executor: ProductApi) : BaseRepository<ProductRepositoryContainer, ProductApi> {
 
-    override fun get(query: Map<String, String>) = ProductRepositoryContainer(executor.get(apiKey = Api.API_KEY,
-            params = query).execute().body()?.data ?: listOf())
+    override fun get(query: Map<String, String>) = ProductRepositoryContainer(executor.get(
+            apiKey = Api.API_KEY,
+            params = query).execute().body()?.data ?: listOf()
+    )
 
     override fun update(dataContainer: ProductRepositoryContainer, query: Map<String, String>) = dataContainer
 
