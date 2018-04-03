@@ -1,15 +1,10 @@
 package com.room.pavelfedor.roomexample.ui.listing.view
 
-import android.app.Activity
 import android.content.Context
-import android.content.ContextWrapper
-import android.os.Bundle
 import android.support.design.widget.CoordinatorLayout
 import android.util.AttributeSet
-import android.view.ViewGroup
 import android.widget.Toast
 import com.room.pavelfedor.roomexample.data.product.entity.local.ProductEntity
-import com.room.pavelfedor.roomexample.ui.base.stack.BackStackContextWrapper
 import com.room.pavelfedor.roomexample.ui.base.view.BaseView
 import com.room.pavelfedor.roomexample.ui.listing.adapter.ListingAdapter
 import com.room.pavelfedor.roomexample.ui.listing.model.BaseListingModel
@@ -25,17 +20,7 @@ class ListingView : CoordinatorLayout, BaseView {
 
     constructor(context: Context?, attrs: AttributeSet?) : this(context, attrs, 0)
 
-    constructor(context: Context?, attrs: AttributeSet?, defStyleAttr: Int) : super(context, attrs, defStyleAttr) {
-        if (!isInEditMode) inject(((context as Activity).baseContext as? BackStackContextWrapper)
-                ?: return)
-    }
-
-    private fun inject(contextWrapper: BackStackContextWrapper) {
-        contextWrapper.backStack.getCurrentItem(parent as ViewGroup)
-                ?.getArgs<BaseListingPresenter<BaseListingModel>>()?.apply {
-                    presenter = this
-                }
-    }
+    constructor(context: Context?, attrs: AttributeSet?, defStyleAttr: Int) : super(context, attrs, defStyleAttr)
 
     override fun onFinishInflate() {
         super.onFinishInflate()

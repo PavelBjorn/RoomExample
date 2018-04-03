@@ -1,19 +1,16 @@
 package com.room.pavelfedor.roomexample.ui.search.view
 
-import android.app.Activity
 import android.content.Context
 import android.support.constraint.ConstraintLayout
 import android.util.AttributeSet
 import android.view.View
-import android.view.ViewGroup
+import android.view.ViewParent
 import android.widget.ArrayAdapter
 import android.widget.Toast
 import com.room.pavelfedor.roomexample.R
 import com.room.pavelfedor.roomexample.data.category.entity.local.CategoryEntity
-import com.room.pavelfedor.roomexample.ui.base.stack.BackStackContextWrapper
-import com.room.pavelfedor.roomexample.ui.base.stack.StackItem
+import com.room.pavelfedor.roomexample.polaris.contract.PolarisContract
 import com.room.pavelfedor.roomexample.ui.base.view.BaseView
-import com.room.pavelfedor.roomexample.ui.listing.presenter.SearchedProductsPresenter
 import com.room.pavelfedor.roomexample.ui.search.presenter.SearchPresenter
 import kotlinx.android.synthetic.main.search_view.view.*
 
@@ -21,6 +18,7 @@ class SearchView : ConstraintLayout, BaseView {
 
     private var catAdapter: ArrayAdapter<CategoryEntity> = ArrayAdapter(context, R.layout.item_cat, android.R.id.text1)
     private val presenter = SearchPresenter()
+    override val eventDispatcher = context?.getSystemService(PolarisContract.DISPATCHER) as? PolarisContract.UiEventDispatcher
 
     constructor(context: Context?) : super(context)
 
@@ -38,13 +36,7 @@ class SearchView : ConstraintLayout, BaseView {
         catAdapter.setNotifyOnChange(true)
         spCategories.adapter = catAdapter
         btnSearch.setOnClickListener {
-            edtSearch.text.toString().apply {
-                if (this.isNotBlank()) ((context as Activity).baseContext as? BackStackContextWrapper)?.backStack?.navigateTo(
-                        parent as ViewGroup, StackItem(
-                        layoutRes = R.layout.list_view,
-                        args = SearchedProductsPresenter((spCategories.selectedItem as CategoryEntity).id, this)
-                ))
-            }
+
         }
     }
 
@@ -76,5 +68,15 @@ class SearchView : ConstraintLayout, BaseView {
     fun displayCategories(categories: List<CategoryEntity>) {
         catAdapter.clear()
         catAdapter.addAll(categories)
+    }
+
+    override fun getEventKey() = id
+
+    class SearchEvent(key: String) : PolarisContract.UiEventDispatcher.Event()
+
+    class OnCreateEvent() : PolarisContract.UiEventDispatcher.Event()
+
+    override fun getParentForAccessibility(): ViewParent {
+        return super.getParentForAccessibility()
     }
 }

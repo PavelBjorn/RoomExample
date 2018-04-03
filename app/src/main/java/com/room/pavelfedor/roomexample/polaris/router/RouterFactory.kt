@@ -1,10 +1,10 @@
 package com.room.pavelfedor.roomexample.polaris.router
 
-import com.room.pavelfedor.roomexample.polaris.tag.Tag
+import com.room.pavelfedor.roomexample.polaris.contract.PolarisContract
 
 interface RouterFactory {
 
-    fun registerRouter(router: Router<in Tag>)
+    fun registerRouter(router: Router<in PolarisContract>)
 
-    fun <T:Tag> makeRouter(tag: Tag):Router<T>
+    fun <T : PolarisContract> makeRouter(contract: PolarisContract): Router<T>
 }

@@ -1,8 +1,8 @@
 package com.room.pavelfedor.roomexample.polaris.router
 
-import com.room.pavelfedor.roomexample.polaris.tag.Tag
+import com.room.pavelfedor.roomexample.polaris.contract.Presenter
 
-interface Router <T:Tag> {
+interface Router <T:Presenter> {
 
     fun routeTo(tag:T)
 

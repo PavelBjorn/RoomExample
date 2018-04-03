@@ -1,7 +1,9 @@
 package com.room.pavelfedor.roomexample.ui.base.view
 
+import com.room.pavelfedor.roomexample.polaris.contract.PolarisContract
 
-interface BaseView {
+
+interface BaseView : PolarisContract.PolarisView {
 
     fun displayError(throwable: Throwable)
 

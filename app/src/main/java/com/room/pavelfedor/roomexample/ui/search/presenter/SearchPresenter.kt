@@ -7,6 +7,18 @@ import com.room.pavelfedor.roomexample.ui.search.view.SearchView
 
 class SearchPresenter : BasePresenter<SearchModel, SearchView> {
 
+    override fun attachView(view: SearchView) {
+        takeView(view)
+    }
+
+    override fun detachView() {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
+    override fun subscribeOnUiEvents() {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
     override var model: SearchModel = SearchModel()
 
     override var view: SearchView? = null

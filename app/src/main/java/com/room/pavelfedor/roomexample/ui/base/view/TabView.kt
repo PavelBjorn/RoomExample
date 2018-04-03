@@ -6,14 +6,18 @@ import android.support.constraint.ConstraintLayout
 import android.util.AttributeSet
 import android.widget.Toast
 import com.room.pavelfedor.roomexample.R
+import com.room.pavelfedor.roomexample.polaris.contract.PolarisContract
 import com.room.pavelfedor.roomexample.ui.base.adapter.NavModel
 import com.room.pavelfedor.roomexample.ui.base.adapter.NavViewPagerAdapter
+import com.room.pavelfedor.roomexample.ui.base.dispatcher.DefaultEventDispatcher
 import com.room.pavelfedor.roomexample.ui.listing.presenter.FavoritePresenter
 import kotlinx.android.synthetic.main.tab_view.view.*
 
 class TabView : ConstraintLayout, BaseView {
 
     private lateinit var navViewPagerAdapter: NavViewPagerAdapter
+
+    override val eventDispatcher: PolarisContract.UiEventDispatcher? = null
 
     constructor(context: Context?) : super(context)
 
@@ -47,4 +51,6 @@ class TabView : ConstraintLayout, BaseView {
         vpTabContainer.adapter = navViewPagerAdapter
         tlNav.setupWithViewPager(vpTabContainer)
     }
+
+    override fun getEventKey(): Any = if (id != -1) id else throw IllegalArgumentException("view should have id")
 }
