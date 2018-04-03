@@ -11,11 +11,17 @@ abstract class BaseListingModel : BaseModel() {
 
     abstract fun getProducts(query: Map<String, String>): Single<List<ProductEntity>>
 
-    open fun updateProducts(products: List<ProductEntity>) = repositoryInteractor.updateRepository(
-            ProductEntityRepositoryContainer(products.toMutableList())
-    ).map { it.data }.subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
-
     fun switchFavoriteStatus(item: ProductEntity) {
-
+        repositoryInteractor.run {
+            getFromRepository(ProductEntityRepositoryContainer::class.java,
+                    mapOf(ProductEntity.ID_COLUMN to item.id.toString())
+            ).map { it.data.isEmpty() }
+                    .flatMap {
+                        ProductEntityRepositoryContainer(data = mutableListOf(item)).run {
+                            if (it) saveToRepository(this)
+                            else removeFromRepository(this)
+                        }
+                    }
+        }
     }
 }

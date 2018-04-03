@@ -1,6 +1,5 @@
 package com.room.pavelfedor.roomexample.ui.base.view
 
-import android.os.Bundle
 
 interface BaseView {
 
@@ -11,7 +10,4 @@ interface BaseView {
     fun dismissProgress()
 
     fun initChildren()
-
-    fun setArgs(args: Bundle)
-
 }

@@ -39,7 +39,8 @@ class ProductLocalRepository(override val executor: ProductDao) : BaseCachedRepo
     override fun getContainerClass() = ProductEntityRepositoryContainer::class.java
 
     private fun formQuery(params: Map<String, String>): String {
-        return ("REMOVE_" + params.map { "AND WHERE ${it.key} = ${it.value}" }.toList().joinToString { it }).replace("REMOVE_AND", "")
+        return ("REMOVE_" + params.map { "AND WHERE ${it.key} = ${it.value}" }.toList().joinToString { it })
+                .replace("REMOVE_AND", "").replace("REMOVE_", "")
     }
 }
 

@@ -1,6 +1,5 @@
 package com.room.pavelfedor.roomexample.ui.listing.presenter
 
-import android.os.Bundle
 import com.room.pavelfedor.roomexample.ui.base.presenter.BasePresenter
 import com.room.pavelfedor.roomexample.ui.listing.model.BaseListingModel
 import com.room.pavelfedor.roomexample.ui.listing.view.ListingView
@@ -17,13 +16,13 @@ abstract class BaseListingPresenter<Model : BaseListingModel> : BasePresenter<Mo
         view = null
     }
 
-    fun getProducts(args: Bundle) {
+    fun getProducts(clear: Boolean = true) {
         view?.showProgress()
-        model.getProducts(convertToQuery(args))
+        model.getProducts(getParams())
                 .subscribe(
                         {
                             view?.dismissProgress()
-                            view?.displayProducts(it, args.getBoolean("clear", true))
+                            view?.displayProducts(it, clear)
                         },
                         {
                             view?.dismissProgress()
@@ -35,6 +34,6 @@ abstract class BaseListingPresenter<Model : BaseListingModel> : BasePresenter<Mo
         view?.displayError(error)
     }
 
-    protected abstract fun convertToQuery(args: Bundle): Map<String, String>
+    protected abstract fun getParams(): Map<String, String>
 
 }

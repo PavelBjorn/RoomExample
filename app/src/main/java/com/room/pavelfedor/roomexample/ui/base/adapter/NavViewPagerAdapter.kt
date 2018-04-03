@@ -1,22 +1,20 @@
 package com.room.pavelfedor.roomexample.ui.base.adapter
 
-import android.os.Bundle
 import android.support.annotation.LayoutRes
 import android.support.v4.view.PagerAdapter
-import android.view.LayoutInflater
+import android.support.v7.app.AppCompatActivity
 import android.view.View
 import android.view.ViewGroup
-import com.room.pavelfedor.roomexample.ui.base.view.BaseView
+import com.room.pavelfedor.roomexample.ui.base.stack.BackStackContextWrapper
+import com.room.pavelfedor.roomexample.ui.base.stack.StackItem
 
 class NavViewPagerAdapter(private val navModels: MutableList<NavModel>) : PagerAdapter() {
 
     override fun instantiateItem(container: ViewGroup, position: Int): Any {
-        return (LayoutInflater.from(container.context).inflate
-        (navModels[position].layoutRes, container, false) as? BaseView)?.apply {
-            setArgs(navModels[position].args)
-            container.addView(this as View)
-        } ?: throw IllegalArgumentException()
-
+        return ((container.context as AppCompatActivity).baseContext as BackStackContextWrapper).backStack.navigateTo(
+                container,
+                navModels[position]
+        )
     }
 
     override fun destroyItem(container: ViewGroup, position: Int, `object`: Any) {
@@ -31,8 +29,8 @@ class NavViewPagerAdapter(private val navModels: MutableList<NavModel>) : PagerA
 }
 
 class NavModel(
-        @LayoutRes val layoutRes: Int,
+        @LayoutRes layoutRes: Int,
         val pageTitle: String,
-        val args: Bundle = Bundle()
-)
+        args: Any? = null
+) : StackItem(layoutRes = layoutRes, saveToBackStack = false, args = args)
 

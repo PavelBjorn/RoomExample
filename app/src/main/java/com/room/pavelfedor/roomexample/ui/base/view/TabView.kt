@@ -8,6 +8,7 @@ import android.widget.Toast
 import com.room.pavelfedor.roomexample.R
 import com.room.pavelfedor.roomexample.ui.base.adapter.NavModel
 import com.room.pavelfedor.roomexample.ui.base.adapter.NavViewPagerAdapter
+import com.room.pavelfedor.roomexample.ui.listing.presenter.FavoritePresenter
 import kotlinx.android.synthetic.main.tab_view.view.*
 
 class TabView : ConstraintLayout, BaseView {
@@ -30,6 +31,7 @@ class TabView : ConstraintLayout, BaseView {
     }
 
     override fun showProgress(progressCount: Int, interminable: Boolean) {
+
     }
 
     override fun dismissProgress() {
@@ -39,14 +41,10 @@ class TabView : ConstraintLayout, BaseView {
     override fun initChildren() {
         navViewPagerAdapter = NavViewPagerAdapter(mutableListOf(
                 NavModel(R.layout.search_view, "Search"),
-                NavModel(R.layout.search_view, "Favorite")
+                NavModel(R.layout.list_view, "Favorite", FavoritePresenter())
         ))
 
         vpTabContainer.adapter = navViewPagerAdapter
         tlNav.setupWithViewPager(vpTabContainer)
-    }
-
-    override fun setArgs(args: Bundle) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 }

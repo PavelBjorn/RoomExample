@@ -1,15 +1,19 @@
 package com.room.pavelfedor.roomexample.ui.search.view
 
+import android.app.Activity
 import android.content.Context
-import android.os.Bundle
 import android.support.constraint.ConstraintLayout
 import android.util.AttributeSet
 import android.view.View
+import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.Toast
 import com.room.pavelfedor.roomexample.R
 import com.room.pavelfedor.roomexample.data.category.entity.local.CategoryEntity
+import com.room.pavelfedor.roomexample.ui.base.stack.BackStackContextWrapper
+import com.room.pavelfedor.roomexample.ui.base.stack.StackItem
 import com.room.pavelfedor.roomexample.ui.base.view.BaseView
+import com.room.pavelfedor.roomexample.ui.listing.presenter.SearchedProductsPresenter
 import com.room.pavelfedor.roomexample.ui.search.presenter.SearchPresenter
 import kotlinx.android.synthetic.main.search_view.view.*
 
@@ -33,6 +37,15 @@ class SearchView : ConstraintLayout, BaseView {
         catAdapter.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line)
         catAdapter.setNotifyOnChange(true)
         spCategories.adapter = catAdapter
+        btnSearch.setOnClickListener {
+            edtSearch.text.toString().apply {
+                if (this.isNotBlank()) ((context as Activity).baseContext as? BackStackContextWrapper)?.backStack?.navigateTo(
+                        parent as ViewGroup, StackItem(
+                        layoutRes = R.layout.list_view,
+                        args = SearchedProductsPresenter((spCategories.selectedItem as CategoryEntity).id, this)
+                ))
+            }
+        }
     }
 
     override fun onAttachedToWindow() {
@@ -63,9 +76,5 @@ class SearchView : ConstraintLayout, BaseView {
     fun displayCategories(categories: List<CategoryEntity>) {
         catAdapter.clear()
         catAdapter.addAll(categories)
-    }
-
-    override fun setArgs(args: Bundle) {
-
     }
 }
