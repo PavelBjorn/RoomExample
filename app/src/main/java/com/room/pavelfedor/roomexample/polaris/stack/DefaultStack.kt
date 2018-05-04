@@ -1,8 +1,9 @@
 package com.room.pavelfedor.roomexample.polaris.stack
 
+import android.os.Parcelable
 import com.room.pavelfedor.roomexample.polaris.tag.Tag
 import java.util.*
 
-data class DefaultStack(override val tag: Tag) : Stack {
-    override val items: LinkedList<Stack> = LinkedList()
+class DefaultStack : Stack {
+    override val items: LinkedList<Parcelable> = LinkedList()
 }

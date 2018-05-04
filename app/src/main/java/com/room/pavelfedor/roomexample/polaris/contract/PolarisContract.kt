@@ -1,17 +1,15 @@
 package com.room.pavelfedor.roomexample.polaris.contract
 
-import android.os.Bundle
+import android.os.Parcelable
 
 
-interface PolarisContract {
+interface PolarisContract : Parcelable {
 
     val presenter: PolarisPresenter<*>
 
     val view: PolarisView
 
     val uiEventDispatcher: UiEventDispatcher
-
-    val polarisViewState: Bundle
 
     interface PolarisPresenter<in View : PolarisView> {
 
@@ -27,6 +25,8 @@ interface PolarisContract {
         val eventDispatcher: UiEventDispatcher?
 
         fun getEventKey(): Any
+
+        fun getEvents(): List<UiEventDispatcher.Event>
     }
 
     interface UiEventDispatcher {

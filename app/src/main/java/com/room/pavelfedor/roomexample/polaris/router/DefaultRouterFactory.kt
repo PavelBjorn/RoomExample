@@ -13,5 +13,4 @@ class DefaultRouterFactory : RouterFactory {
     override fun <T : PolarisContract> makeRouter(contrac: PolarisContract): Router<T> {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
-
 }

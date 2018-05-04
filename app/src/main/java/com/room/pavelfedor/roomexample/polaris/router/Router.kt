@@ -1,14 +1,12 @@
 package com.room.pavelfedor.roomexample.polaris.router
 
-import com.room.pavelfedor.roomexample.polaris.contract.Presenter
+import com.room.pavelfedor.roomexample.polaris.contract.PolarisContract
 
-interface Router <T:Presenter> {
+interface Router<T : PolarisContract> {
 
-    fun routeTo(tag:T)
+    fun routeTo(tag: T)
 
-    fun isForTag(tag: T) = geTagClass() == tag::class.java
+    fun geTagClass(): Class<out T>
 
-    fun geTagClass():Class<out T>
-
-    fun compare(router:Router<*>): Boolean
+    fun compare(router: Router<*>): Boolean
 }
