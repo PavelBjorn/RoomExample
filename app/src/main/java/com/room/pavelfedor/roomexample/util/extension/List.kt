@@ -9,3 +9,4 @@ fun <Item> MutableList<Item>.replace(item: Item, predicate: (Item) -> Boolean = 
     if (this != -1) set(this, item)
 }
 
+fun <Item> MutableList<Item>.doSomeShit() = this
