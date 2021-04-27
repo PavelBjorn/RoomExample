@@ -17,3 +17,6 @@ fun <Item> MutableList<Item>.doSomeShit2(item: Item, predicate: (Item) -> Boolea
     if (this != -1) set(this, item)
 }
 
+fun <Item> MutableList<Item>.doSomeShit3(item: Item, predicate: (Item) -> Boolean = { it == item }) = indexOfFirst(predicate = predicate).apply {
+    if (this != -1) set(this, item)
+}
